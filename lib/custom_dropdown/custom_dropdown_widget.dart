@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CustomDropdown extends StatefulWidget {
-  String text;
-  CustomDropdown({super.key, required this.text});
+  final String text;
+  final List itemList;
+  final Function(int val) onTap;
+  const CustomDropdown(
+      {super.key,
+      required this.text,
+      required this.itemList,
+      required this.onTap});
 
   @override
   State<CustomDropdown> createState() => _CustomDropdownState();
@@ -16,7 +22,6 @@ class _CustomDropdownState extends State<CustomDropdown> {
   double xPosition = 0;
   double yPosition = 0;
   OverlayEntry? floatingOverlayMenu;
-  List fruitList = ["apple", "grapes", "orange", "mango", "banana", "kiwi"];
   int? selectedIndex;
   @override
   void initState() {
@@ -62,7 +67,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                             padding: EdgeInsets.zero,
                             physics: const ScrollPhysics(
                                 parent: AlwaysScrollableScrollPhysics()),
-                            itemCount: fruitList.length,
+                            itemCount: widget.itemList.length,
                             itemBuilder: (context, index) => GestureDetector(
                                   onTap: () {
                                     setState(() {
@@ -83,7 +88,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                                                 color: Color.fromARGB(
                                                     255, 237, 236, 236)))),
                                     child: Text(
-                                      fruitList[index],
+                                      widget.itemList[index],
                                       style: const TextStyle(
                                           fontSize: 20, color: Colors.black),
                                     ),
@@ -115,12 +120,14 @@ class _CustomDropdownState extends State<CustomDropdown> {
       child: Container(
         width: 200,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: Colors.blue),
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+            border: Border.all(style: BorderStyle.solid)),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         child: Row(
           children: [
             Text(selectedIndex != null
-                ? fruitList[selectedIndex!]
+                ? widget.itemList[selectedIndex!]
                 : widget.text),
           ],
         ),

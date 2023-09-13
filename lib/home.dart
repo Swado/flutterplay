@@ -10,14 +10,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List fruitList = [
+    "apple",
+    "banana",
+    "kiwi",
+    "orange",
+    "grapes",
+    "dragonfruit"
+  ];
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body:
-          Container(child: Center(child: CustomDropdown(text: "My drop down"))),
+      body: Container(
+          child: Center(
+              child: CustomDropdown(
+        text: fruitList[selectedIndex],
+        onTap: (val) {
+          setState(() {
+            selectedIndex = val;
+          });
+        },
+        itemList: fruitList,
+      ))),
     );
   }
 }
